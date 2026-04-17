@@ -1,0 +1,68 @@
+export type Role = 'packer' | 'supervisor' | 'admin';
+export type Status = 'IDLE' | 'PACKING' | 'BREAK' | 'ON_HOLD' | 'COMPLETED' | 'CANCELLED' | 'IN_PROGRESS';
+
+export interface User {
+  uid: string;
+  name: string;
+  role: Role;
+  pin: string;
+  isActive?: boolean;
+}
+
+export interface Hold {
+  start_time: number;
+  end_time?: number;
+  reason: string;
+  duration_seconds?: number;
+}
+
+export interface Session {
+  id: string;
+  packer_id: string;
+  packer_name: string;
+  station?: string;
+  bin_id: string;
+  order_id?: string;
+  start_time: number;
+  end_time?: number;
+  status: Status;
+  date: string;
+  holds: Hold[];
+  cycle_time_seconds?: number;
+}
+
+export interface ConsumableRequest {
+  id: string;
+  packer_id: string;
+  packer_name: string;
+  station?: string;
+  consumable_type: string;
+  station_bin_id: string | null;
+  packing_session_id: string | null;
+  requested_at: number;
+  date: string;
+  status: 'PENDING' | 'COMPLETED';
+}
+
+export interface HelpRequest {
+  id: string;
+  packer_id: string;
+  packer_name: string;
+  station: string;
+  requested_at: number;
+  date: string;
+  status: 'PENDING' | 'RESOLVED';
+}
+
+export interface ActiveLogin {
+  station: string;
+  packer_id: string;
+  packer_name: string;
+  login_time: number;
+}
+
+export interface StationConfig {
+  id: string;
+  name: string;
+  last_active: number;
+}
